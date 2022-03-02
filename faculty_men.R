@@ -6,28 +6,21 @@ library(tidyr)
 library(ggplot2)
 library(scales)
 library(ggpubr)
+library(xlsx)
 #read in the data from excel
-raw<- read_excel("/Users/cleopathy/Desktop/assignment1.xlsx", sheet = "RAW DATA - DEIDENTIFIED")
+file<- read_excel("/Users/cleopathy/Desktop/assignment1.xlsx", sheet = "RAW DATA - DEIDENTIFIED")
 #international student excluded from analysis:
-file <- raw[!raw$Q62 == 'International (Non-U.S. Citizen with temporary U.S. Visa)', ]
-head(file)
-colnames(file)
+file <- filter(file, Q62 != "International (Non-U.S. Citizen with temporary U.S. Visa)")
 
 #reformat column name
 colnames(file) <- gsub("/", "_", colnames(file))
 colnames(file) <- gsub(" ", "_", colnames(file))
 colnames(file) <- gsub("\\?", "", colnames(file))
 colnames(file) <- gsub("\\.", "", colnames(file))
+head(file)
 colnames(file)
-#str(file)
+str(file)
 
-rmNArows<-function(d){
-  goodRows<-apply(d,1,function(x) sum(is.na(x))!=ncol(d)) # keep rows that is not empty
-  d[goodRows,]
-}
-file <- rmNArows(file)
-file <- file[!file$Q12=="I do not wish to complete the XX University Doctoral Exit survey.",]
-nrow(file)
 #urg dataset
 unique(file$Underrepresented)
 urg <- filter(file, Underrepresented=="Underrepresented Group")

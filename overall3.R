@@ -6,26 +6,21 @@ library(tidyr)
 library(ggplot2)
 library(scales)
 library(ggpubr)
+library(xlsx)
 #read in the data from excel
-raw<- read_excel("/Users/cleopathy/Desktop/assignment1.xlsx", sheet = "RAW DATA - DEIDENTIFIED")
+file<- read_excel("/Users/cleopathy/Desktop/assignment1.xlsx", sheet = "RAW DATA - DEIDENTIFIED")
 #international student excluded from analysis:
-file <- raw[!raw$Q62 == 'International (Non-U.S. Citizen with temporary U.S. Visa)', ]
-head(file)
-colnames(file)
+file <- filter(file, Q62 != "International (Non-U.S. Citizen with temporary U.S. Visa)")
 
 #reformat column name
 colnames(file) <- gsub("/", "_", colnames(file))
 colnames(file) <- gsub(" ", "_", colnames(file))
 colnames(file) <- gsub("\\?", "", colnames(file))
 colnames(file) <- gsub("\\.", "", colnames(file))
+head(file)
 colnames(file)
 str(file)
 
-file$na_count_r <- apply(file, 1, function(x) sum(is.na(x)))
-file <- file[!file$na_count_r ==125, ]
-file <- file[!file$Q12=="I do not wish to complete the XX University Doctoral Exit survey.",]
-file$na_count_r <- NULL
-nrow(file)
 
 #urg dataset
 unique(file$Underrepresented)
@@ -138,6 +133,7 @@ ggplot(df, aes(x=Mean_score_of_satisfaction, y=category, fill=group, label=round
   ggtitle("If you were to start your doctoral career again...") +
   scale_colour_brewer("Dark2") +
   theme(text = element_text(size=15))+
+  xlim(0,5) +
   scale_fill_brewer(palette="Paired")
 theme_minimal() 
 coord_flip()
