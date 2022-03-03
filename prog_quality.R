@@ -6,7 +6,6 @@ library(tidyr)
 library(ggplot2)
 library(scales)
 library(ggpubr)
-library(xlsx)
 #read in the data from excel
 file<- read_excel("/Users/cleopathy/Desktop/assignment1.xlsx", sheet = "RAW DATA - DEIDENTIFIED")
 #international student excluded from analysis:
@@ -268,15 +267,17 @@ df
 
 ggplot(df, aes(x=mean, y=category, fill=group, label=mean)) +    
   geom_bar(width = 0.5,stat="identity", color="black", position=position_dodge())+
-  geom_text(position = position_dodge(width = .9), hjust = -0.5,size = 4) + 
+  geom_text(position = position_dodge(width = .5), hjust = -0.5,size = 4) + 
   theme(axis.text.y=element_text(hjust=1,size = 10)) +
   scale_y_discrete(labels = function(x) str_wrap(x, width = 10)) +
   ggtitle("Please rate the following aspects of your doctoral program:") +
   scale_colour_brewer("Dark2") +
   xlim(0,5) +
-  theme(text = element_text(size=10))+
+  theme(axis.text=element_text(size=14,face = 'bold'),
+        axis.title=element_text(size=12,face="bold"),
+        legend.text = element_text(size = 12,face = 'bold'))+
   scale_fill_brewer(palette="Set2")
 theme_minimal() 
 coord_flip()
 
-ggsave("/Users/cleopathy/Desktop/program_quality.png", width = 13, height = 8,bg = 'White')
+ggsave("/Users/cleopathy/Desktop/program_quality.png", width = 10, height = 8,bg = 'White')

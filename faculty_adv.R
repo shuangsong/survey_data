@@ -101,12 +101,16 @@ ggplot(dissertation_help_area, aes(x=category, y=freq, fill=rank, label=scales::
   ylab('Percent') +
   ggtitle("How helpful was the advice you received in these area from your dissertation advisor-URG student") +
   scale_y_continuous(labels=percent) +
-  scale_x_discrete(guide = guide_axis(angle = 45)) +
+  #scale_x_discrete(guide = guide_axis(angle = 45)) +
+  scale_x_discrete(labels = wrap_format(10)) +
   geom_text(position = position_dodge(width = .9),    # move to center of bars
             vjust = -0.5,    # nudge above top of bar
-            size = 3) + 
+            size = 4) + 
+  theme(axis.text=element_text(size=14,face="bold"),
+        axis.title=element_text(size=14,face="bold"),
+        legend.text = element_text(size = 14))
   theme_minimal()
-ggsave("/Users/cleopathy/Desktop/adv_urg.png", width = 15, height = 6,bg = 'White')
+ggsave("/Users/cleopathy/Desktop/adv_urg.png", width = 12, height = 6,bg = 'White')
 # non-urg faculty interactions:
 
 #explore faculty mentoring
@@ -177,10 +181,14 @@ ggplot(adv_data, aes(x=category, y=freq, fill=rank, label=scales::percent(freq))
   ylab('Percent') +
   ggtitle("How helpful was the advice you received in these area from your dissertation advisor-NON URG student") +
   scale_y_continuous(labels=percent) +
-  scale_x_discrete(guide = guide_axis(angle = 45)) +
+  scale_x_discrete(labels = wrap_format(10)) +
+  #scale_x_discrete(guide = guide_axis(angle = 45)) +
   geom_text(position = position_dodge(width = .9),    # move to center of bars
             vjust = -0.5,    # nudge above top of bar
-            size = 3) + 
+            size = 4) + 
+  theme(axis.text=element_text(size=14,face = "bold"),
+        axis.title=element_text(size=14,face="bold"),
+        legend.text = element_text(size = 14))
   theme_minimal()
 
 ggsave("/Users/cleopathy/Desktop/adv_nurg.png", width = 15, height = 6,bg = 'White')

@@ -54,22 +54,25 @@ gender <- c("female","male","male",'female')
 
 d <- data.frame(group,gender)
 d$percent <-c(data_percentage[1,1], data_percentage[2,2], data_percentage[2,1], data_percentage[1,2])
+d$percent <-round(d$percent,1)
 
-
-ggplot(d , aes(x = group, y = percent, fill = gender)) + 
-  geom_bar(stat = "identity",width = 0.5, position = position_stack(vjust = 0.5)) +
+p <-ggplot(d , aes(x = group, y = percent, fill = gender)) + 
+  geom_bar(stat = "identity",width = 0.2, position = position_stack(vjust = 0.5)) +
   ggtitle("Gender percentage in URG and NON URG group") +
-  #geom_text(vjust = -0.5,size = 10) + 
-  theme(axis.text.x=element_text(vjust=1,size = 20)) +
+  geom_text(aes(label = paste0(percent,'%'),y=percent),position = position_dodge(width = .9),size = 5)+
+  theme(axis.text.x=element_text(vjust=1,size = 8)) +
   #scale_y_discrete(size = 15) +
   scale_colour_brewer("Dark2") +
-  theme(text = element_text(size=15))+
+  #scale_x_discrete(labels = wrap_format(10)) +
+  theme(axis.text=element_text(size=14,face = 'bold'),
+        axis.title=element_text(size=12,face="bold"),
+        legend.text = element_text(size = 12))+
   scale_fill_brewer(palette="Paired")
-theme_minimal()
-coord_flip()
+p
+p+coord_flip()
 
 
-ggsave("/Users/cleopathy/Desktop/demograph.png", width = 12, height = 18,bg = 'White')
+ggsave("/Users/cleopathy/Desktop/demograph.png", width = 8, height = 5,bg = 'White')
 
 
 
@@ -111,9 +114,12 @@ p <-ggplot(v , aes(x = group, y = percent, fill = latino)) +
   geom_bar(stat = "identity",width = 0.3, position = position_stack(vjust = 0.5)) +
   #scale_y_continuous(labels = sacle::percent) +
   #use positions to plot labels
-  geom_text(aes(label = paste0(percent,'%'),y=percent),position = position_dodge(width = .9),size = 8)+
+  geom_text(aes(label = paste0(percent,'%'),y=percent),position = position_dodge(width = .9),size = 6)+
   scale_colour_brewer("Dark2") +
   theme(text = element_text(size=15))+
+  theme(axis.text=element_text(size=14,face = 'bold'),
+        axis.title=element_text(size=14,face="bold"),
+        legend.text = element_text(size = 14,face = 'bold'))+
   scale_fill_brewer(palette="Paired")
   theme_minimal()
 p
@@ -121,7 +127,7 @@ p
 p + coord_flip()
 
 
-ggsave("/Users/cleopathy/Desktop/latino.png", width = 18, height = 8,bg = 'White')
+ggsave("/Users/cleopathy/Desktop/latino.png", width = 13, height = 6,bg = 'White')
 
 
 #race/ethinicity : 
@@ -154,14 +160,15 @@ race_data <- rbind(urg_race, nurg_race)
 
 ggplot(race_data, aes(x=count, y=group, fill=race, label=count)) +    
   geom_bar(width = 0.5,stat="identity", color="black", position=position_dodge())+
-  geom_text(position = position_dodge(width = .9), hjust = -0.5,size = 4) + 
-  theme(axis.text.y=element_text(hjust=1,size = 20)) +
+  geom_text(position = position_dodge(width = .5), hjust = -0.5,size = 4) + 
+  theme(axis.text.y=element_text(hjust=1,size = 13)) +
   scale_y_discrete(labels = function(x) str_wrap(x, width = 10)) +
   ggtitle("Race/Ethnicity") +
   scale_colour_brewer("Dark2") +
+  xlim(0,400)+
   theme(text = element_text(size=15))+
   scale_fill_brewer(palette="Blues")
 theme_minimal() 
 
 
-ggsave("/Users/cleopathy/Desktop/race.png", width = 13, height = 5,bg = 'White')
+ggsave("/Users/cleopathy/Desktop/race.png", width = 8, height = 5,bg = 'White')

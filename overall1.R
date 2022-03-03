@@ -127,17 +127,19 @@ df$group <- toupper(df$group)
 colnames(df)[3]<-'Mean_score_of_satisfaction'
 df
 ggplot(df, aes(x=Mean_score_of_satisfaction, y=category, fill=group, label=round(Mean_score_of_satisfaction, digits = 2))) +    
-  geom_bar(width = 0.5,stat="identity", color="black", position=position_dodge())+
-  geom_text(position = position_dodge(width = .9), hjust = -0.5,size = 5) + 
+  geom_bar(width = 0.3,stat="identity", color="black", position=position_dodge())+
+  geom_text(position = position_dodge(width = .3), hjust = -0.5,size = 9) + 
   theme(axis.text.y=element_text(hjust=1,size = 20)) +
   scale_y_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  ggtitle("Please rate your overall satisfaction with each of the following:") +
+  #ggtitle("Please rate your overall satisfaction with each of the following:") +
   scale_colour_brewer("Dark2") +
-  theme(text = element_text(size=15))+
+  theme(axis.text=element_text(size=14,face = 'bold'),
+        axis.title=element_text(size=14,face="bold"),
+        legend.text = element_text(size = 14,face = 'bold'))+
   xlim(0,5) +
   scale_fill_brewer(palette="Dark2")
 theme_minimal() 
 coord_flip()
 
 
-ggsave("/Users/cleopathy/Desktop/overall1.png", width = 17, height = 12,bg = 'White')
+ggsave("/Users/cleopathy/Desktop/overall1.png", width = 12, height = 10,bg = 'White')

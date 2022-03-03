@@ -98,16 +98,20 @@ dissertation_help_area<-rbind(htopicmen_urg, hremen_urg, hwrmen_urg, hacamen_urg
 ggplot(dissertation_help_area, aes(x=category, y=freq, fill=rank, label=scales::percent(freq))) +  
   geom_bar(stat="identity", color="black", position=position_dodge())+
   ylab('Percent') +
-  ggtitle("How helpful was the advice you received from your mentor in each of these areas-URG student")+
+  ggtitle("How helpful was the advice you received from your mentor in each of these areas--URG student") +
   scale_y_continuous(labels=percent) +
-  scale_x_discrete(guide = guide_axis(angle = 45)) +
+  scale_x_discrete(labels = wrap_format(10)) +
+  #scale_x_discrete(guide = guide_axis(angle = 45)) +
   geom_text(position = position_dodge(width = .9),    # move to center of bars
             vjust = -0.5,    # nudge above top of bar
-            size = 3) + 
-  theme_minimal()
-
+            size = 4) + 
+  theme(axis.text=element_text(size=14,face="bold"),
+        axis.title=element_text(size=14,face="bold"),
+        legend.text = element_text(size = 14))
+theme_minimal()
 
 ggsave("/Users/cleopathy/Desktop/mentor_urg.png", width = 15, height = 6,bg = 'White')
+
 
 # non-urg faculty interactions:
 
@@ -177,12 +181,16 @@ dissertation_help_area<-rbind(htopicmen_nurg, hremen_nurg, hwrmen_nurg, hacamen_
 ggplot(dissertation_help_area, aes(x=category, y=freq, fill=rank, label=scales::percent(freq))) +  
   geom_bar(stat="identity", color="black", position=position_dodge())+
   ylab('Percent') +
-  ggtitle("How helpful was the advice you received from your mentor in each of these areas-NON URG student")+
+  ggtitle("How helpful was the advice you received from your mentor in each of these areas-non-URG student") +
   scale_y_continuous(labels=percent) +
-  scale_x_discrete(guide = guide_axis(angle = 45)) +
+  scale_x_discrete(labels = wrap_format(10)) +
+  #scale_x_discrete(guide = guide_axis(angle = 45)) +
   geom_text(position = position_dodge(width = .9),    # move to center of bars
             vjust = -0.5,    # nudge above top of bar
-            size = 3) + 
-  theme_minimal()
+            size = 4) + 
+  theme(axis.text=element_text(size=14,face="bold"),
+        axis.title=element_text(size=14,face="bold"),
+        legend.text = element_text(size = 14))
+theme_minimal()
 
 ggsave("/Users/cleopathy/Desktop/mentor_nurg.png", width = 15, height = 6,bg = 'White')

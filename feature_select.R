@@ -308,68 +308,27 @@ colnames(na) <-'na_number'
 
 #write.csv(d28,'/Users/cleopathy/Desktop/recode.csv')
 
-#load in cleaned data to do feature selection: 
+#load in cleaned data to do feature selection:
+#install.packages('naniar')
+library(naniar)
 ready <-read.csv('/Users/cleopathy/Desktop/recode_rmword.csv')
+#na_strings <- c("NA", "N A", "N / A", "N/A", "N/ A", "Not Available", "NOt available")
+#ready <- ready %>% replace_with_na_all(condition = ~.x %in% na_strings)
+ready$Q45 <- as.numeric(ready$Q45)
+
 #imputation 
-ready$Q45[is.na(ready$Q45)] <- mean(ready$Q45, na.rm = T)
-ready$immigration[is.na(ready$immigration)] <- mean(ready$immigration, na.rm = T)
-ready$coursesched[is.na(ready$coursesched)] <- mean(ready$coursesched, na.rm = T)
-ready$availfac[is.na(ready$availfac)] <- mean(ready$availfac, na.rm = T)
-ready$family[is.na(ready$family)] <- mean(ready$family, na.rm = T)
-ready$workcomm[is.na(ready$workcomm)] <- mean(ready$workcomm, na.rm = T)
-ready$collegial104[is.na(ready$collegial104)] <- mean(ready$collegial104, na.rm = T)
-ready$socclimate103[is.na(ready$socclimate103)] <- mean(ready$socclimate103, na.rm = T)
-ready$intclimate102[is.na(ready$intclimate102)] <- mean(ready$intclimate102, na.rm = T)
-ready$respect101[is.na(ready$respect101)] <- mean(ready$respect101, na.rm = T)
-ready$progqual100[is.na(ready$progqual100)] <- mean(ready$progqual100, na.rm = T)
-ready$employment99[is.na(ready$employment99)] <- mean(ready$employment99, na.rm = T)
-ready$interdisc98[is.na(ready$interdisc98)] <- mean(ready$interdisc98, na.rm = T)
-ready$candidacy97[is.na(ready$candidacy97)] <- mean(ready$candidacy97, na.rm = T)
-ready$advising96[is.na(ready$advising96)] <- mean(ready$advising96, na.rm = T)
-ready$teaching95[is.na(ready$teaching95)] <- mean(ready$teaching95, na.rm = T)
-ready$curriculum94[is.na(ready$curriculum94)] <- mean(ready$curriculum94, na.rm = T)
-ready$recommend93[is.na(ready$recommend93)] <- mean(ready$recommend93, na.rm = T)
-ready$samefield92[is.na(ready$samefield92)] <- mean(ready$samefield92, na.rm = T)
-ready$sameuniv91[is.na(ready$sameuniv91)] <- mean(ready$sameuniv91, na.rm = T)
-ready$Q99[is.na(ready$Q99)] <- mean(ready$Q99, na.rm = T)
-ready$Q90_1[is.na(ready$Q90_1)] <- mean(ready$Q90_1, na.rm = T)
-ready$Q49[is.na(ready$Q49)] <- mean(ready$Q49, na.rm = T)
-ready$Q48[is.na(ready$Q48)] <- mean(ready$Q48, na.rm = T)
-ready$Q48[is.na(ready$Q48)] <- mean(ready$Q48, na.rm = T)
-ready$Q47[is.na(ready$Q47)] <- mean(ready$Q47, na.rm = T)
-ready$Q46[is.na(ready$Q46)] <- mean(ready$Q46, na.rm = T)
-ready$Q39[is.na(ready$Q39)] <- mean(ready$Q39, na.rm = T)
+for (i in 1:ncol(ready)) {
+  ready[ , i][is.na(ready[ , i])] <- mean(ready[ , i], na.rm=TRUE)
+}
 
-
-ready$Q99[is.na(ready$Q99)] <- mean(ready$Q99, na.rm = T)
-ready$Q90_1[is.na(ready$Q90_1)] <- mean(ready$Q90_1, na.rm = T)
-ready$Q49[is.na(ready$Q49)] <- mean(ready$Q49, na.rm = T)
-ready$Q48[is.na(ready$Q48)] <- mean(ready$Q48, na.rm = T)
-ready$Q48[is.na(ready$Q48)] <- mean(ready$Q48, na.rm = T)
-ready$Q47[is.na(ready$Q47)] <- mean(ready$Q47, na.rm = T)
-ready$Q46[is.na(ready$Q46)] <- mean(ready$Q46, na.rm = T)
-ready$Q39[is.na(ready$Q39)] <- mean(ready$Q39, na.rm = T)
-
-
-
-
-
-
-
-
-
-
-# Define the control using a random forest selection function
-control <- rfeControl(functions = rfFuncs, # random forest
-                      method = "repeatedcv", # repeated cv
-                      repeats = 5, # number of repeats
-                      number = 10)
-
-x <- select(ready, -"satoverall")
+# Features
+x <- ready %>%
+  select(-X, -satoverall) %>%
+  as.data.frame()
 
 # Target variable
 y <- ready$satoverall
-library(caret)
+
 # Training: 80%; Test: 20%
 set.seed(2021)
 inTrain <- createDataPartition(y, p = .80, list = FALSE)[,1]
@@ -380,3 +339,40 @@ x_test  <- x[-inTrain, ]
 y_train <- y[ inTrain]
 y_test  <- y[-inTrain]
 
+# Define the control using a random forest selection function
+control <- rfeControl(functions = rfFuncs, # random forest
+                      method = "repeatedcv", # repeated cv
+                      repeats = 5, # number of repeats
+                      number = 10) # number of folds
+
+# Run RFE
+result_rfe1 <- rfe(x = x_train, 
+                   y = y_train, 
+                   sizes = c(1:64),
+                   rfeControl = control)
+
+# Print the results
+result_rfe1
+
+# Print the selected features
+predictors(result_rfe1)
+
+# Post prediction
+postResample(predict(result_rfe1, x_test), y_test)
+
+
+varimp_data <- data.frame(feature = row.names(varImp(result_rfe1))[1:6],
+                          importance = varImp(result_rfe1)[1:6, 1])
+
+ggplot(data = varimp_data, 
+       aes(x = reorder(feature, -importance), y = importance, fill = feature)) +
+  geom_bar(stat="identity") + labs(x = "Features", y = "Variable Importance") + 
+  geom_text(aes(label = round(importance, 2)), vjust=1.6, color="white", size=4) + 
+  theme_bw() + theme(legend.position = "none") + scale_fill_brewer(palette = "Dark2")
+
+ggsave("/Users/cleopathy/Desktop/feature_select.png", width = 10, height = 8,bg = 'White')
+
+
+
+feature_data<-select(ready, satlife, satacad, recommend93, progqual100, progqual22, sameuniv13)
+corrplot(cor(feature_data), method = "color", addCoef.col="grey", order = "AOE")

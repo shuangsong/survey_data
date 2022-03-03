@@ -46,6 +46,9 @@ ggplot(df, aes(x = na_number)) +
 ggplot(df, aes(x = na_number)) + 
   geom_histogram(aes(y = ..density..), color = 'blue2', fill = 'cornflowerblue', position="identity")+
   labs(title="Histogram of NA in each column",x="columns", y = "NA count") +
+  theme(axis.text=element_text(size=14,face = 'bold'),
+        axis.title=element_text(size=14,face="bold"),
+        legend.text = element_text(size = 14,face = 'bold'))+
   geom_density(alpha=.2, fill="#FF6666") 
 
 ggsave("/Users/cleopathy/Desktop/eachcol_na.png", width = 10, height = 8,bg = 'White')
