@@ -6,7 +6,7 @@ library(tidyr)
 library(ggplot2)
 library(scales)
 library(ggpubr)
-library(xlsx)
+
 #read in the data from excel
 file<- read_excel("/Users/cleopathy/Desktop/assignment1.xlsx", sheet = "RAW DATA - DEIDENTIFIED")
 #international student excluded from analysis:
@@ -67,6 +67,7 @@ ggplot(d , aes(x = group, y = percent, fill = gender)) +
   scale_fill_brewer(palette="Paired")
 theme_minimal()
 coord_flip()
+
 
 ggsave("/Users/cleopathy/Desktop/demograph.png", width = 12, height = 18,bg = 'White')
 

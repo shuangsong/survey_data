@@ -6,26 +6,24 @@ library(tidyr)
 library(ggplot2)
 library(scales)
 library(ggpubr)
+
 #read in the data from excel
-raw<- read_excel("/Users/cleopathy/Desktop/assignment1.xlsx", sheet = "RAW DATA - DEIDENTIFIED")
+file<- read_excel("/Users/cleopathy/Desktop/assignment1.xlsx", sheet = "RAW DATA - DEIDENTIFIED")
 #international student excluded from analysis:
-file <- raw[!raw$Q62 == 'International (Non-U.S. Citizen with temporary U.S. Visa)', ]
-head(file)
-colnames(file)
+file <- filter(file, Q62 != "International (Non-U.S. Citizen with temporary U.S. Visa)")
 
 #reformat column name
 colnames(file) <- gsub("/", "_", colnames(file))
 colnames(file) <- gsub(" ", "_", colnames(file))
 colnames(file) <- gsub("\\?", "", colnames(file))
 colnames(file) <- gsub("\\.", "", colnames(file))
+head(file)
 colnames(file)
 str(file)
 
-file$na_count_r <- apply(file, 1, function(x) sum(is.na(x)))
-file <- file[!file$na_count_r ==125, ]
-file <- file[!file$Q12=="I do not wish to complete the XX University Doctoral Exit survey.",]
-file$na_count_r <- NULL
-nrow(file) #now the data is cleaned 
+
+urg <- filter(file, Underrepresented=="Underrepresented Group")
+non_urg <- filter(file, Underrepresented=="Non-Underrespresented Group")
 
 #urg dataset
 unique(file$Underrepresented)
@@ -184,5 +182,35 @@ c1 <- some[some$category == 'Academic Career Options',]
 c2 <- c1[,c(2,4)]
 table(c2$group, c2$freq)
 chisq.test(c2$group, c2$freq,correct = FALSE)
+
+
+
+PATH <- "https://raw.githubusercontent.com/guru99-edu/R-Programming/master/poisons.csv"
+df <- read.csv(PATH) %>%
+  select(-X) %>% 
+  mutate(poison = factor(poison, ordered = TRUE))
+glimpse(df)
+
+df %>%
+  group_by(poison) %>%
+  summarise(
+    count_poison = n(),
+    mean_time = mean(time, na.rm = TRUE),
+    sd_time = sd(time, na.rm = TRUE)
+  )
+
+ggplot(df, aes(x = poison, y = time, fill = poison)) +
+  geom_boxplot() +
+  geom_jitter(shape = 15,
+              color = "steelblue",
+              position = position_jitter(0.21)) +
+  theme_classic()
+
+anova_one_way <- aov(time~poison, data = df)
+summary(anova_one_way)
+
+
+
+
 
 
