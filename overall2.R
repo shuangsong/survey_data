@@ -52,15 +52,15 @@ respect9 <- select(file, respect9) %>%
   mutate(category="students in my program are treated with respect by faculty")
 colnames(respect9)<-c("condition", "category")
 
-intclimate10 <- select(file, respect9) %>%
+intclimate10 <- select(file, intclimate10) %>%
   mutate(category="The intellectual climate of my program is positive") 
 colnames(intclimate10)<-c("condition", "category")
 
-socclimate11 <- select(file, respect9) %>%
+socclimate11 <- select(file, socclimate11) %>%
   mutate(category="The social climate of my program is positive")
 colnames(socclimate11)<-c("condition", "category")
 
-collegial12 <- select(file, respect9) %>%
+collegial12 <- select(file, collegial12) %>%
   mutate(category="students in my program are collegial")
 colnames(collegial12)<-c("condition", "category")
 
@@ -188,15 +188,15 @@ df
 
 
 ggplot(df, aes(x=Mean_score_of_satisfaction, y=category, fill=group, label=round(Mean_score_of_satisfaction, digits = 2))) +    
-  geom_bar(stat="identity", color="black", position=position_dodge())+
+  geom_bar(width = 0.5,stat="identity", color="black", position=position_dodge())+
   geom_text(position = position_dodge(width = .9), hjust = -0.5,size = 5) + 
   theme(axis.text.y=element_text(hjust=1,size = 14)) +
   scale_y_discrete(labels = function(x) str_wrap(x, width = 10)) +
   ggtitle("To what extent do you agree/disagree with each of following statement?") +
   scale_colour_brewer("Dark2") +
   theme(text = element_text(size=15))+
-  xlim(0,5) +
-  scale_fill_brewer(palette="Accent")
+  xlim(0,6) +
+  scale_fill_brewer(palette="Dark2")
 theme_minimal() 
 coord_flip()
 

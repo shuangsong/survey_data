@@ -127,13 +127,15 @@ df
 
 ggplot(df, aes(x=Mean_score_of_satisfaction, y=category, fill=group, label=round(Mean_score_of_satisfaction, digits = 2))) +    
   geom_bar(width = 0.5,stat="identity", color="black", position=position_dodge())+
-  geom_text(position = position_dodge(width = .9), hjust = -0.5,size = 5) + 
+  geom_text(position = position_dodge(width = .5), hjust = -0.5,size = 10) + 
   theme(axis.text.y=element_text(hjust=1,size = 20)) +
   scale_y_discrete(labels = function(x) str_wrap(x, width = 10)) +
-  ggtitle("If you were to start your doctoral career again...") +
+  #ggtitle("If you were to start your doctoral career again...") +
   scale_colour_brewer("Dark2") +
-  theme(text = element_text(size=15))+
-  xlim(0,5) +
+  theme(axis.text=element_text(size=14,face = 'bold'),
+        axis.title=element_text(size=14,face="bold"),
+        legend.text = element_text(size = 14,face = 'bold'))+
+  xlim(0,6) +
   scale_fill_brewer(palette="Paired")
 theme_minimal() 
 coord_flip()

@@ -20,6 +20,7 @@ colnames(file) <- gsub("\\.", "", colnames(file))
 head(file)
 colnames(file)
 str(file)
+write.csv(file,'/Users/cleopathy/Desktop/reformated.csv')
 #file_dup <- file
 #now count how many NAs in rows 
 

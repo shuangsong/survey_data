@@ -117,16 +117,16 @@ analysis?}\label{how-did-you-prepare-the-data-for-analysis}}
 \begin{itemize}
 \tightlist
 \item
-  First I loaded the data using R language, by exploring the data, there
-  are 668 rows and 125 columns.
+  First, I loaded the data using R language and did some data
+  exploratory analysis. There are 668 rows and 125 columns.
 \item
   Second, reformat the column names. In the raw data there are question
   mark, dash, space, dot that is not suitable and standard for column
   names, so I filter them out and replaced them with either underscore,
   or no space.
 \item
-  From instruction on powerpoint, we need to exclude the international
-  student, so I filtered and excluded them from the dataframe.
+  From instruction on power point, we need to exclude the international
+  student, so I filtered and excluded them from the data frame.
 \item
   Now the data is much more clean and ready for further analysis. See
   code below.
@@ -232,18 +232,19 @@ reformat the column names:
 values?}\label{how-did-you-address-any-missing-values}}
 
 First, I did analysis and find out if there are cases that are completed
-empty (full of NAs), these records should be excluded for the further
-analysis.
+empty (full of NAs)in the entire row, these records should be excluded
+for the further analysis. There are 0 rows has been removed for this
+step.
 
-Second, find out how many NAs in each row and each column, if the NA
-rate is higher than a cut out rate, for example, 50\%, then the row and
-columns should be excluded.
+Second, find out how many NAs in each column, if the NA rate is higher
+than a cut out rate (eg. \textgreater50\%) in the column, that columns
+will be excluded. There are 25 column has been removed for this step.
 
-For rows and columns that has lower NA rate, we need to remove NAs and
-replaced them with a value. Currently, we need imputation. Imputation is
-especially important in advanced data analysis. There are lots of
-methods of data imputation, for this analysis, I used averaged
-imputation. In this way, missing values are taken care of.
+For the rest of table still has some NAs, I did the imputation to
+replace NAs into a value. Currently, i imputed using the mean of the
+column. Imputation is especially important in data analysis and there
+are lots of methods for data imputation, however, for this analysis I
+used averaged imputation. In this way, missing values are taken care of.
 
 \hypertarget{which-statistical-methods-did-you-use-for-your-data-analysis-and-why}{%
 \subsubsection{3. Which statistical methods did you use for your data
@@ -251,21 +252,15 @@ analysis, and
 why?}\label{which-statistical-methods-did-you-use-for-your-data-analysis-and-why}}
 
 When compare if there is a significant difference between URG students'
-group and non-URG students' group for the categories in question faculty
-mentoring and advising, I used pairwise t-test to calculate p value. In
-those categories: selection of a dissertation topic, your dissertation
-research, writing and revising your dissertation, academic career
-option, nonacademic career option, search for employment or training, I
-found that there is no significant statistical difference between URG
-and Non-URG students as p value is larger than 0.05.
+group and non-URG students' group for the categories, I used pairwise
+t-test to calculate p value. If P value \textgreater{} 0.05, there is no
+significant statistical difference between URG and Non-URG students,
+otherwise p value \textless{} 0.05, significant difference between these
+two groups.
 
-I also convert likert scale data to numbers and used means of score to
-visualize the program quality score bar plot.
-
-In the category of selection of a dissertation topic, I used ANOVA to
-conduct an analysis showing that there is no significant difference of
-extent of helpful on this category between different ethnicity/race
-group.
+For 3 groups or more than 3 groups comparison, eg. in ethnicity/race
+group, I used ANOVA to conduct an analysis showing whether there is
+significant difference of extent of helpful among these categories.
 
 \hypertarget{did-you-determine-response-rates-for-the-different-questions-why-or-why-not}{%
 \subsubsection{4. Did you determine response rates for the different
@@ -290,7 +285,7 @@ result biased toward white. This might be the issue of method of
 sampling, or they have higher response than other group. What we need to
 do is to have the target proportion, divided by the actual proportion of
 different race group, to get weight of each different group. In this
-way, it can be a rebalance way and can make survey more accurately to
+way, it can be a re-balance way and can make survey more accurately to
 reflect population.
 
 \hypertarget{what-appropriate-tests-of-statistical-significance-did-you-consider-using-and-used-when-evaluating-differences-across-different-sub-populations}{%

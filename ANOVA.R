@@ -75,6 +75,21 @@ df %>%
   )
 
 
+ggplot(df, aes(x = Race_RECODE, y = ht_num)) + 
+  geom_violin(aes(fill = Race_RECODE), trim = FALSE) + 
+  geom_boxplot(width = 0.1)+
+  scale_color_brewer(palette = "Dark2") +
+  ggtitle("ANOVA on multiple race group") +
+  xlab("Race/Ethnicity") +
+  ylab("dissertation topic helpful score")+
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
+  #scale_x_discrete(guide = guide_axis(angle = 45)) +
+  theme(axis.text=element_text(size=14),
+        axis.title=element_text(size=14),
+        legend.text = element_text(size = 14))
+
+ggsave("/Users/cleopathy/Desktop/anova_race_topicadv_violin.png", width = 12, height = 6,bg = 'White')
+
 
 
 ggplot(df, aes(x = Race_RECODE, y = ht_num, fill = Race_RECODE)) +
@@ -88,7 +103,10 @@ ggplot(df, aes(x = Race_RECODE, y = ht_num, fill = Race_RECODE)) +
   scale_x_discrete(guide = guide_axis(angle = 45)) +
   geom_text(label = '', position = position_dodge(width = .9),    # move to center of bars
             vjust = -0.5,    # nudge above top of bar
-            size = 3) + 
+            size = 4) + 
+  theme(axis.text=element_text(size=14,face = 'bold'),
+        axis.title=element_text(size=14,face="bold"),
+        legend.text = element_text(size = 14,face = 'bold'))+
   theme_classic()
 
 anova_one_way <- aov(ht_num~Race_RECODE, data = df)
@@ -105,7 +123,6 @@ df %>%
     mean_topic = mean(ht_num, na.rm = TRUE),
     sd_topic = sd(ht_num, na.rm = TRUE)
   )
-
 
 
 ggplot(df, aes(x = Underrepresented, y = ht_num, fill = Underrepresented)) +

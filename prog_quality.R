@@ -89,7 +89,7 @@ em <- select(file, employment21) %>%
 colnames(em)<-c("condition", "category")
 
 pr <- select(file, progqual22) %>%
-  mutate(category="assistance in finding employment") 
+  mutate(category="Overall program quality") 
 colnames(pr)<-c("condition", "category")
 
 overall<-rbind(cu, tea, ad, can, inter, em, pr)
@@ -131,7 +131,7 @@ levels<-as.factor(urg$employment21)
 levels <-factor(levels,c("Poor","Fair","Good","Very good","Excellent"))
 urg$em_num <-as.numeric(levels)
 
-levels<-as.factor(furg$progqual22)
+levels<-as.factor(urg$progqual22)
 levels <-factor(levels,c("Poor","Fair","Good","Very good","Excellent"))
 urg$pr_num <-as.numeric(levels)
 
@@ -159,8 +159,8 @@ em_urg <- select(urg, employment21) %>%
   mutate(category="assistance in finding employment") 
 colnames(em_urg)<-c("condition", "category")
 
-pr_urg <- select(urg, employment21) %>%
-  mutate(category="assistance in finding employment") 
+pr_urg <- select(urg, progqual22) %>%
+  mutate(category="Overall program quality") 
 colnames(pr_urg)<-c("condition", "category")
 
 urg_data<-rbind(cu_urg, tea_urg, ad_urg, can_urg, inter_urg, em_urg, pr_urg)
@@ -177,7 +177,7 @@ urg_data$co_num <-as.numeric(levels)
 
 
 #urg_data$co_num [is.nan(as.numeric(urg_data$co_num))] <- "NA"
-#urg_data$co_num[is.na(urg_data$co_num)] <- mean(urg_data$co_num, na.rm = T)
+urg_data$co_num[is.na(urg_data$co_num)] <- mean(urg_data$co_num, na.rm = T)
 #urg_data
 #non_urg data :
 #urg data :
@@ -235,8 +235,8 @@ colnames(em_non_urg)<-c("condition", "category")
 
 
 
-pr_non_urg <- select(non_urg, employment21) %>%
-  mutate(category="assistance in finding employment") 
+pr_non_urg <- select(non_urg, progqual22) %>%
+  mutate(category="Overall program quality") 
 colnames(pr_non_urg)<-c("condition", "category")
 
 

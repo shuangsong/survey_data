@@ -22,10 +22,7 @@ colnames(file)
 str(file)
 
 
-urg <- filter(file, Underrepresented=="Underrepresented Group")
-non_urg <- filter(file, Underrepresented=="Non-Underrespresented Group")
 
-#urg dataset
 unique(file$Underrepresented)
 urg <- filter(file, Underrepresented=="Underrepresented Group")
 non_urg <- filter(file, Underrepresented=="Non-Underrespresented Group")
@@ -41,9 +38,6 @@ htopicmen_urg <-filter(urg, htopicmen=="Very helpful" | htopicmen =="Somewhat he
   select(htopicmen)
 colnames(htopicmen_urg)=c("rank", "category")
 htopicmen_urg <- htopicmen_urg %>% group_by(rank) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  select(rank, freq) %>%
   mutate(category="Selection of a Dissertation Topic")
 
 
@@ -51,9 +45,6 @@ hremen_urg <-filter(urg, hresearchmen=="Very helpful" | hresearchmen =="Somewhat
   select(hresearchmen)
 colnames(hremen_urg)=c("rank", "category")
 hremen_urg <- hremen_urg %>% group_by(rank) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  select(rank, freq) %>%
   mutate(category="Your Dissertation Research")
 
 
@@ -61,9 +52,6 @@ hwrmen_urg <-filter(urg, hwritingmen=="Very helpful" | hwritingmen =="Somewhat h
   select(hwritingmen)
 colnames(hwrmen_urg)=c("rank", "category")
 hwrmen_urg <- hwrmen_urg %>% group_by(rank) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  select(rank, freq) %>%
   mutate(category="Writing and Revising your Dissertation")
 
 
@@ -71,9 +59,6 @@ hacamen_urg <-filter(urg, hacadmen=="Very helpful" | hacadmen =="Somewhat helpfu
   select(hacadmen)
 colnames(hacamen_urg)=c("rank", "category")
 hacamen_urg <- hacamen_urg %>% group_by(rank) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  select(rank, freq) %>%
   mutate(category="Academic Career Options")
 
 
@@ -81,9 +66,6 @@ hnomen_urg <-filter(urg, hnonacadmen=="Very helpful" | hnonacadmen =="Somewhat h
   select(hnonacadmen)
 colnames(hnomen_urg)=c("rank", "category")
 hnomen_urg <- hnomen_urg %>% group_by(rank) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  select(rank, freq) %>%
   mutate(category="Nonacademic Career Options")
 
 
@@ -91,12 +73,9 @@ hemmen_urg <-filter(urg, hemploymen=="Very helpful" | hemploymen =="Somewhat hel
   select(hemploymen)
 colnames(hemmen_urg)=c("rank", "category")
 hemmen_urg <- hemmen_urg %>% group_by(rank) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  select(rank, freq) %>%
   mutate(category="Search for Employement or Training")
 
-dissertation_help_area<-rbind(htopicmen_urg, hremen_urg, hwrmen_urg, hacamen_urg, hnomen_urg, hemmen_urg)
+urg_data_mentor<-rbind(htopicmen_urg, hremen_urg, hwrmen_urg, hacamen_urg, hnomen_urg, hemmen_urg)
 
 
 
@@ -104,9 +83,6 @@ htopicmen_nurg <-filter(non_urg, htopicmen=="Very helpful" | htopicmen =="Somewh
   select(htopicmen)
 colnames(htopicmen_nurg)=c("rank", "category")
 htopicmen_nurg <- htopicmen_nurg %>% group_by(rank) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  select(rank, freq) %>%
   mutate(category="Selection of a Dissertation Topic")
 
 
@@ -114,9 +90,6 @@ hremen_nurg <-filter(non_urg, hresearchmen=="Very helpful" | hresearchmen =="Som
   select(hresearchmen)
 colnames(hremen_nurg)=c("rank", "category")
 hremen_nurg <- hremen_nurg %>% group_by(rank) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  select(rank, freq) %>%
   mutate(category="Your Dissertation Research")
 
 
@@ -124,9 +97,6 @@ hwrmen_nurg <-filter(non_urg, hwritingmen=="Very helpful" | hwritingmen =="Somew
   select(hwritingmen)
 colnames(hwrmen_nurg)=c("rank", "category")
 hwrmen_nurg <- hwrmen_nurg %>% group_by(rank) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  select(rank, freq) %>%
   mutate(category="Writing and Revising your Dissertation")
 
 
@@ -134,9 +104,6 @@ hacamen_nurg <-filter(non_urg, hacadmen=="Very helpful" | hacadmen =="Somewhat h
   select(hacadmen)
 colnames(hacamen_nurg)=c("rank", "category")
 hacamen_nurg <- hacamen_nurg %>% group_by(rank) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  select(rank, freq) %>%
   mutate(category="Academic Career Options")
 
 
@@ -144,9 +111,6 @@ hnomen_nurg <-filter(non_urg, hnonacadmen=="Very helpful" | hnonacadmen =="Somew
   select(hnonacadmen)
 colnames(hnomen_nurg)=c("rank", "category")
 hnomen_nurg <- hnomen_nurg %>% group_by(rank) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  select(rank, freq) %>%
   mutate(category="Nonacademic Career Options")
 
 
@@ -154,60 +118,86 @@ hemmen_nurg <-filter(non_urg, hemploymen=="Very helpful" | hemploymen =="Somewha
   select(hemploymen)
 colnames(hemmen_nurg)=c("rank", "category")
 hemmen_nurg <- hemmen_nurg %>% group_by(rank) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  select(rank, freq) %>%
   mutate(category="Search for Employement or Training")
 
 non_urg_men<-rbind(htopicmen_nurg, hremen_nurg, hwrmen_nurg, hacamen_nurg, hnomen_nurg, hemmen_nurg)
 
 
-dissertation_help_area$group <-"URG"
+urg_data_mentor$group <-"URG"
 non_urg_men$group <-'NON-URG'
-all <- rbind(dissertation_help_area, non_urg_men)
+all <- rbind(urg_data_mentor, non_urg_men)
 all
+#library(mosaic)
+#xchisq.test(category~group, data = all, correct = FALSE)
+topic <-all[all$category == 'Selection of a Dissertation Topic',]
+#topic
+t <- table(topic$group, topic$rank)
+chisq.test(t) # p value > 0.05 
+
+topic <-all[all$category == 'Your Dissertation Research',]
+#topic
+t <- table(topic$group, topic$rank)
+chisq.test(t) 
 
 
-#subset: 
+topic <-all[all$category == 'Writing and Revising your Dissertation',]
+#topic
+t <- table(topic$group, topic$rank)
+chisq.test(t) 
+
+
+topic <-all[all$category == 'Academic Career Options',]
+#topic
+t <- table(topic$group, topic$rank)
+chisq.test(t) 
+
+topic <-all[all$category == 'Nonacademic Career Options',]
+#topic
+t <- table(topic$group, topic$rank)
+chisq.test(t) 
+
+
+topic <-all[all$category == 'Search for Employement or Training',]
+#topic
+t <- table(topic$group, topic$rank)
+chisq.test(t) 
+
+#all p values are >0.05 meaning no difference.
+
+
+
+
+
+
+
+
+
+
+
+
+#subset: #chi square 
 #rank somewhat helpful
 some<-all[all$rank =='Somewhat helpful',]
 c1 <- some[some$category == 'Selection of a Dissertation Topic',]
 c2 <- c1[,c(2,4)]
 table(c2$group, c2$freq)
 chisq.test(c2$group, c2$freq,correct = FALSE)
-#not signifinat different 
-#same 
-some<-all[all$rank =='Somewhat helpful',]
-c1 <- some[some$category == 'Academic Career Options',]
-c2 <- c1[,c(2,4)]
-table(c2$group, c2$freq)
-chisq.test(c2$group, c2$freq,correct = FALSE)
 
 
+#pairwise t-test
+#from very helpful: compare URG and NON-URG group of each category: 
+#very helpful:
 
-PATH <- "https://raw.githubusercontent.com/guru99-edu/R-Programming/master/poisons.csv"
-df <- read.csv(PATH) %>%
-  select(-X) %>% 
-  mutate(poison = factor(poison, ordered = TRUE))
-glimpse(df)
+d<-urg %>% 
+  mutate_at(vars(37:42),
+            ~as.numeric(recode(.,
+                               "Not at all helpful"=1,
+                               "Not very helpful"=2,
+                               "Somewhat helpful"=3,
+                               "Very helpful"=4,
+                               "N/A - I did not receive advice on this"=0)))
 
-df %>%
-  group_by(poison) %>%
-  summarise(
-    count_poison = n(),
-    mean_time = mean(time, na.rm = TRUE),
-    sd_time = sd(time, na.rm = TRUE)
-  )
 
-ggplot(df, aes(x = poison, y = time, fill = poison)) +
-  geom_boxplot() +
-  geom_jitter(shape = 15,
-              color = "steelblue",
-              position = position_jitter(0.21)) +
-  theme_classic()
-
-anova_one_way <- aov(time~poison, data = df)
-summary(anova_one_way)
 
 
 

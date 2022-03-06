@@ -71,7 +71,7 @@ all$co_num[is.na(all$co_num)] <- mean(all$co_num, na.rm = T)
 all
 
 
-#urg data :
+#non urg data :
 levels<-as.factor(non_urg$satacad)
 levels <-factor(levels,c("Poor","Fair","Good","Very good","Excellent"))
 non_urg$sc_num <-as.numeric(levels)

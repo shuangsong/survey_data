@@ -367,10 +367,13 @@ varimp_data <- data.frame(feature = row.names(varImp(result_rfe1))[1:6],
 ggplot(data = varimp_data, 
        aes(x = reorder(feature, -importance), y = importance, fill = feature)) +
   geom_bar(stat="identity") + labs(x = "Features", y = "Variable Importance") + 
-  geom_text(aes(label = round(importance, 2)), vjust=1.6, color="white", size=4) + 
-  theme_bw() + theme(legend.position = "none") + scale_fill_brewer(palette = "Dark2")
+  geom_text(aes(label = round(importance, 2)), vjust=1.6, color="black", size=8) + 
+  theme_bw() + theme(axis.text=element_text(size=14,face = 'bold'),
+                     axis.title=element_text(size=14,face="bold"),
+                     legend.text = element_text(size = 14,face = 'bold')) +
+  scale_fill_brewer(palette = "Dark2")
 
-ggsave("/Users/cleopathy/Desktop/feature_select.png", width = 10, height = 8,bg = 'White')
+ggsave("/Users/cleopathy/Desktop/feature_select.png", width = 12, height = 8,bg = 'White')
 
 
 
