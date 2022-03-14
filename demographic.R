@@ -59,8 +59,8 @@ d$percent <-round(d$percent,1)
 p <-ggplot(d , aes(x = group, y = percent, fill = gender)) + 
   geom_bar(stat = "identity",width = 0.2, position = position_stack(vjust = 0.5)) +
   ggtitle("Gender percentage in URG and NON URG group") +
-  geom_text(aes(label = paste0(percent,'%'),y=percent),position = position_dodge(width = .9),size = 5)+
-  theme(axis.text.x=element_text(vjust=1,size = 8)) +
+  geom_text(aes(label = paste0(percent,'%'),y=percent),position = position_stack(vjust = 0.5),size = 4)+
+  #theme(axis.text.x=element_text(vjust=1,size = 8)) +
   #scale_y_discrete(size = 15) +
   scale_colour_brewer("Dark2") +
   #scale_x_discrete(labels = wrap_format(10)) +
@@ -114,7 +114,7 @@ p <-ggplot(v , aes(x = group, y = percent, fill = latino)) +
   geom_bar(stat = "identity",width = 0.3, position = position_stack(vjust = 0.5)) +
   #scale_y_continuous(labels = sacle::percent) +
   #use positions to plot labels
-  geom_text(aes(label = paste0(percent,'%'),y=percent),position = position_dodge(width = .9),size = 6)+
+  geom_text(aes(label = paste0(percent,'%'),y=percent),position = position_stack(vjust = 0.5),size = 5)+
   scale_colour_brewer("Dark2") +
   theme(text = element_text(size=15))+
   theme(axis.text=element_text(size=14,face = 'bold'),

@@ -321,6 +321,9 @@ for (i in 1:ncol(ready)) {
   ready[ , i][is.na(ready[ , i])] <- mean(ready[ , i], na.rm=TRUE)
 }
 
+head(ready)
+write.csv(ready,'/Users/cleopathy/Desktop/encode_imput.csv')
+
 # Features
 x <- ready %>%
   select(-X, -satoverall) %>%

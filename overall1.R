@@ -142,4 +142,31 @@ theme_minimal()
 coord_flip()
 
 
-ggsave("/Users/cleopathy/Desktop/overall1.png", width = 12, height = 10,bg = 'White')
+#ggsave("/Users/cleopathy/Desktop/overall1.png", width = 12, height = 10,bg = 'White')
+
+
+
+topic <-all[all$category == 'Your academic experience at xx university',]
+#topic
+t <- table(topic$group, topic$condition)
+chisq.test(t) # p value<0.05 
+
+
+
+topic <-all[all$category == 'Your student life experience at xx university',]
+#topic
+t <- table(topic$group, topic$condition)
+chisq.test(t) # p value < 0.05 
+
+
+
+topic <-all[all$category == 'Your overall experience at xx university',]
+#topic
+t <- table(topic$group, topic$condition)
+chisq.test(t) p <0.05
+
+
+
+
+
+

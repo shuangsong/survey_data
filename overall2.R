@@ -200,4 +200,31 @@ ggplot(df, aes(x=Mean_score_of_satisfaction, y=category, fill=group, label=round
 theme_minimal() 
 coord_flip()
 
-ggsave("/Users/cleopathy/Desktop/overall2.png", width = 15, height = 12,bg = 'White')
+#ggsave("/Users/cleopathy/Desktop/overall2.png", width = 15, height = 12,bg = 'White')
+
+topic <-data_visual[data_visual$category == 'students in my program are treated with respect by faculty',]
+#topic
+t <- table(topic$group, topic$condition)
+chisq.test(t) # p value>0.05 
+
+
+
+topic <-data_visual[data_visual$category == 'The intellectual climate of my program is positive',]
+#topic
+t <- table(topic$group, topic$condition)
+chisq.test(t) # p value >0.05 
+
+
+
+topic <-data_visual[data_visual$category == 'The social climate of my program is positive',]
+#topic
+t <- table(topic$group, topic$condition)
+chisq.test(t) #p >0.05
+
+
+topic <-data_visual[data_visual$category == 'students in my program are collegial',]
+#topic
+t <- table(topic$group, topic$condition)
+chisq.test(t) #p >0.05
+
+

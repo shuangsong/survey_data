@@ -140,4 +140,30 @@ ggplot(df, aes(x=Mean_score_of_satisfaction, y=category, fill=group, label=round
 theme_minimal() 
 coord_flip()
 
-ggsave("/Users/cleopathy/Desktop/overall3.png", width = 17, height = 12,bg = 'White')
+#ggsave("/Users/cleopathy/Desktop/overall3.png", width = 17, height = 12,bg = 'White')
+
+
+topic <-data_visual[data_visual$category == 'Would you select xx university',]
+#topic
+t <- table(topic$group, topic$condition)
+chisq.test(t) # p value>0.05 
+
+
+
+topic <-data_visual[data_visual$category == 'would you select same field of study',]
+#topic
+t <- table(topic$group, topic$condition)
+chisq.test(t) # p value >0.05 
+
+
+
+topic <-data_visual[data_visual$category == 'would you recommend university to someone considering your field of study',]
+#topic
+t <- table(topic$group, topic$condition)
+chisq.test(t) #p >0.05
+
+
+
+
+
+
